@@ -21,7 +21,11 @@ fun BottomNavigationPanel(navController: NavController) {
         items.forEach {
             NavigationBarItem(
                 selected = it.screen_route == backStackEntry.value?.destination?.route,
-                onClick = { navController.navigate(it.screen_route) },
+                onClick = {
+                    navController.navigate(it.screen_route) {
+                        launchSingleTop = true // Don't navigate if we are already at this tab
+                    }
+                          },
                 icon = {
                     Icon(imageVector = it.icon, contentDescription = it.title)
                 },
