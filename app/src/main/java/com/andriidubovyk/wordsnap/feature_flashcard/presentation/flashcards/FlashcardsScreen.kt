@@ -42,9 +42,6 @@ fun FlashcardScreen(
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add flashcard")
             }
-        },
-        bottomBar = {
-            BottomNavigationPanel(navController)
         }
     ) {
         Column(

@@ -7,22 +7,22 @@ import androidx.compose.material.icons.filled.School
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.util.Screen
 
-sealed class BottomNavItem(
+sealed class BottomNavigationItem(
     var title: String,
     var icon: ImageVector,
     var screen_route: String
 ) {
-    object Flashcards : BottomNavItem(
-        title = "Flashcard",
+    object Flashcards : BottomNavigationItem(
+        title = "Flashcards",
         icon = Icons.Default.Dataset,
         screen_route = Screen.Flashcards.route
     )
-    object Study: BottomNavItem(
+    object Study: BottomNavigationItem(
         title = "Study",
         icon = Icons.Default.School,
         screen_route = Screen.Study.route
     )
-    object Account: BottomNavItem(
+    object Account: BottomNavigationItem(
         title = "Account",
         icon = Icons.Default.Person,
         screen_route = Screen.Account.route

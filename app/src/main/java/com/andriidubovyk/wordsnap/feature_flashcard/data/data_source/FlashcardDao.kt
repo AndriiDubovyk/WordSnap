@@ -18,4 +18,7 @@ interface FlashcardDao {
 
     @Delete
     suspend fun deleteFlashcard(flashcard: Flashcard)
+
+    @Query("SELECT * FROM flashcard ORDER BY score ASC LIMIT 5")
+    suspend fun getLowestScoreFlashcards(): List<Flashcard>
 }

@@ -39,7 +39,8 @@ object AppModule {
             getFlashcards = GetFlashcards(repository),
             deleteFlashcard = DeleteFlashcard(repository),
             addFlashcard = AddFlashcard(repository),
-            getFlashcard = GetFlashcard(repository)
+            getFlashcard = GetFlashcard(repository),
+            getLowestScoreFlashcards = GetLowestScoreFlashcards(repository)
         )
     }
 }
