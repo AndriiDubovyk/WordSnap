@@ -6,16 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.add_edit_flashcard.AddEditFlashcardScreen
+import com.andriidubovyk.wordsnap.feature_flashcard.presentation.bottom_nav_bar.AccountScreen
+import com.andriidubovyk.wordsnap.feature_flashcard.presentation.bottom_nav_bar.StudyScreen
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.flashcards.FlashcardScreen
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.util.Screen
 import com.andriidubovyk.wordsnap.ui.theme.WordSnapTheme
@@ -34,14 +33,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHost(
-                         navController = navController,
-                        startDestination = Screen.FlashcardsScreen.route
+                        navController = navController,
+                        startDestination = Screen.Flashcards.route
                     ) {
-                        composable(route = Screen.FlashcardsScreen.route) {
+                        composable(route = Screen.Flashcards.route) {
                             FlashcardScreen(navController = navController)
                         }
                         composable(
-                            route = Screen.AddEditFlashcardScreen.route +
+                            route = Screen.AddEditFlashcard.route +
                                     "?flashcardId={flashcardId}",
                             arguments = listOf(
                                 navArgument(
@@ -53,6 +52,12 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             AddEditFlashcardScreen(navController = navController)
+                        }
+                        composable(route = Screen.Study.route) {
+                            StudyScreen(navController = navController)
+                        }
+                        composable(route = Screen.Account.route) {
+                            AccountScreen(navController = navController)
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.andriidubovyk.wordsnap.feature_flashcard.presentation.add_edit_flash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
@@ -42,17 +43,18 @@ fun AddEditFlashcardScreen(
     }
     
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     viewModel.onEvent(AddEditFlashcardEvent.SaveFlashcard)
                 },
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                shape = CircleShape,
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Save flashcard")
             }
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+        }
     ) {
         Column(
             modifier = Modifier

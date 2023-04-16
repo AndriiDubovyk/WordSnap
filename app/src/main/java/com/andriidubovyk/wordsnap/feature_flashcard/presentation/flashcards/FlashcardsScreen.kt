@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.andriidubovyk.wordsnap.feature_flashcard.presentation.bottom_nav_bar.BottomNavigationPanel
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.flashcards.components.FlashcardItem
 import com.andriidubovyk.wordsnap.feature_flashcard.presentation.util.Screen
 import kotlinx.coroutines.launch
@@ -29,17 +31,21 @@ fun FlashcardScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.AddEditFlashcardScreen.route)
+                    navController.navigate(Screen.AddEditFlashcard.route)
                 },
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                shape = CircleShape,
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add flashcard")
             }
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        bottomBar = {
+            BottomNavigationPanel(navController)
+        }
     ) {
         Column(
             modifier = Modifier.padding(it)
@@ -56,7 +62,7 @@ fun FlashcardScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate(Screen.AddEditFlashcardScreen.route + "?flashcardId=${flashcard.id}")
+                                navController.navigate(Screen.AddEditFlashcard.route + "?flashcardId=${flashcard.id}")
                             },
                         onDeleteClick = {
                             viewModel.onEvent(FlashcardsEvent.DeleteFlashcard(flashcard))
