@@ -11,7 +11,6 @@ import com.andriidubovyk.wordsnap.feature_flashcard.domain.model.Flashcard
 abstract class FlashcardDatabase: RoomDatabase() {
 
     abstract val flashcardDao: FlashcardDao
-
     companion object {
         const val DATABASE_NAME = "flashcards_db"
     }

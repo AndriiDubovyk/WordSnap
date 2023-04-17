@@ -5,11 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andriidubovyk.wordsnap.feature_flashcard.domain.model.Flashcard
-import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.FlashcardUseCases
-import com.andriidubovyk.wordsnap.feature_flashcard.presentation.add_edit_flashcard.AddEditFlashcardViewModel
-import com.andriidubovyk.wordsnap.feature_flashcard.presentation.flashcards.FlashcardsEvent
-import com.andriidubovyk.wordsnap.feature_flashcard.presentation.flashcards.FlashcardsState
+import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.flashcard.FlashcardUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

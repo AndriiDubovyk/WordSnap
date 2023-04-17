@@ -1,22 +1,29 @@
 package com.andriidubovyk.wordsnap.feature_flashcard.presentation.add_edit_flashcard
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.focus.FocusState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andriidubovyk.wordsnap.feature_flashcard.common.Resource
 import com.andriidubovyk.wordsnap.feature_flashcard.domain.model.Flashcard
 import com.andriidubovyk.wordsnap.feature_flashcard.domain.model.InvalidFlashcardException
-import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.FlashcardUseCases
+import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.flashcard.FlashcardUseCases
+import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.word_detail.WordDetailUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEditFlashcardViewModel @Inject constructor(
     private val flashcardUseCases: FlashcardUseCases,
+    private val wordDetailUseCases: WordDetailUseCases,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -34,6 +41,9 @@ class AddEditFlashcardViewModel @Inject constructor(
         hint = "Enter translation..."
     ))
     val flashcardTranslation: State<FlashcardTextFieldState> = _flashcardTranslation
+
+    private val _onlineDefinitionsDialog = mutableStateOf(OnlineDefinitionsDialogState())
+    val onlineDefinitionsDialog: State<OnlineDefinitionsDialogState> = _onlineDefinitionsDialog
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -67,64 +77,118 @@ class AddEditFlashcardViewModel @Inject constructor(
     fun onEvent(event: AddEditFlashcardEvent) {
         when(event) {
             is AddEditFlashcardEvent.EnterWord -> {
-                _flashcardWord.value = flashcardWord.value.copy(
-                    text = event.value
-                )
+                setText(_flashcardWord, event.value)
             }
             is AddEditFlashcardEvent.ChangeWordFocus -> {
-                _flashcardWord.value = flashcardWord.value.copy(
-                    isHintVisible = !event.focusState.isFocused &&
-                            flashcardWord.value.text.isBlank()
-                )
+                setFocus(_flashcardWord, event.focusState)
             }
             is AddEditFlashcardEvent.EnterDefinition -> {
-                _flashcardDefinition.value = flashcardDefinition.value.copy(
-                    text = event.value
-                )
+                setText(_flashcardDefinition, event.value)
             }
             is AddEditFlashcardEvent.ChangeDefinitionFocus -> {
-                _flashcardDefinition.value = flashcardDefinition.value.copy(
-                    isHintVisible = !event.focusState.isFocused &&
-                            flashcardDefinition.value.text.isBlank()
-                )
+                setFocus(_flashcardDefinition, event.focusState)
             }
             is AddEditFlashcardEvent.EnterTranslation -> {
-                _flashcardTranslation.value = flashcardTranslation.value.copy(
-                    text = event.value
-                )
+                setText(_flashcardTranslation, event.value)
             }
             is AddEditFlashcardEvent.ChangeTranslationFocus -> {
-                _flashcardTranslation.value = flashcardTranslation.value.copy(
-                    isHintVisible = !event.focusState.isFocused &&
-                            flashcardTranslation.value.text.isBlank()
-                )
+                setFocus(_flashcardTranslation, event.focusState)
+            }
+            is AddEditFlashcardEvent.GetDefinitionsFromDictionary -> {
+                getDefinitionsFromDictionary()
+            }
+            is AddEditFlashcardEvent.CloseDefinitonsDialog -> {
+                closeDefinitionsDialog()
+            }
+            is AddEditFlashcardEvent.SelectDefinitionFromDialog -> {
+                selectDefinitionFromDialog(event.value)
             }
             is AddEditFlashcardEvent.SaveFlashcard -> {
-                viewModelScope.launch {
-                    try {
-                        flashcardUseCases.addFlashcard(
-                            Flashcard(
-                                word = flashcardWord.value.text,
-                                definition = flashcardDefinition.value.text.takeIf { it.isNotBlank() },
-                                translation = flashcardTranslation.value.text.takeIf { it.isNotBlank() },
-                                timestamp = System.currentTimeMillis(),
-                                score = if (currentFlashcardId == -1) {
-                                    0
-                                } else {
-                                    flashcardUseCases.getFlashcard(currentFlashcardId?:-1)?.score?:0
-                                       },
-                                id = currentFlashcardId
-                            )
+                saveFlashcard()
+            }
+        }
+    }
+
+    private fun setText(
+        fieldState: MutableState<FlashcardTextFieldState>,
+        text: String
+    ) {
+        fieldState.value = fieldState.value.copy(
+            text = text
+        )
+    }
+
+    private fun setFocus(
+        fieldState: MutableState<FlashcardTextFieldState>,
+        focusState: FocusState
+    ) {
+        fieldState.value = fieldState.value.copy(
+            isHintVisible = !focusState.isFocused && fieldState.value.text.isBlank()
+        )
+    }
+
+    private fun getDefinitionsFromDictionary() {
+        wordDetailUseCases.getWordDetail(flashcardWord.value.text).onEach { result ->
+            when(result) {
+                is Resource.Error -> {
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackbar(
+                            message = "Couldn't load this word definition"
                         )
-                        _eventFlow.emit(UiEvent.SaveFlashcard)
-                    } catch(e: InvalidFlashcardException) {
-                        _eventFlow.emit(
-                            UiEvent.ShowSnackbar(
-                                message = e.message ?: "Couldn't save flashcard"
-                            )
+                    )
+                }
+                is Resource.Success -> {
+                    val definitions = result.data?.definitions
+                    definitions?.let {
+                        _onlineDefinitionsDialog.value = onlineDefinitionsDialog.value.copy(
+                            isOpen = true,
+                            definitions = it
                         )
                     }
                 }
+                else -> {}
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun closeDefinitionsDialog() {
+        _onlineDefinitionsDialog.value = onlineDefinitionsDialog.value.copy(
+            isOpen = false,
+        )
+    }
+
+    private fun selectDefinitionFromDialog(definition: String) {
+        _flashcardDefinition.value = flashcardDefinition.value.copy(
+            text = definition,
+            isHintVisible = false
+        )
+        closeDefinitionsDialog()
+    }
+
+    private fun saveFlashcard() {
+        viewModelScope.launch {
+            try {
+                flashcardUseCases.addFlashcard(
+                    Flashcard(
+                        word = flashcardWord.value.text,
+                        definition = flashcardDefinition.value.text.takeIf { it.isNotBlank() },
+                        translation = flashcardTranslation.value.text.takeIf { it.isNotBlank() },
+                        timestamp = System.currentTimeMillis(),
+                        score = if (currentFlashcardId == -1) {
+                            0
+                        } else {
+                            flashcardUseCases.getFlashcard(currentFlashcardId?:-1)?.score?:0
+                        },
+                        id = currentFlashcardId
+                    )
+                )
+                _eventFlow.emit(UiEvent.SaveFlashcard)
+            } catch(e: InvalidFlashcardException) {
+                _eventFlow.emit(
+                    UiEvent.ShowSnackbar(
+                        message = e.message ?: "Couldn't save this flashcard"
+                    )
+                )
             }
         }
     }

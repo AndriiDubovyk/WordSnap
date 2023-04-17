@@ -23,7 +23,10 @@ fun StudyScreen(navController: NavController) {
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape,
             ) {
-                Text("Start")
+                Text(
+                    text = "Start",
+                    style = MaterialTheme.typography.headlineMedium
+                )
             }
         }
     ) {
@@ -33,7 +36,10 @@ fun StudyScreen(navController: NavController) {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("Ready to start?")
+            Text(
+                text = "Ready to start?",
+                style = MaterialTheme.typography.headlineLarge
+            )
         }
     }
 }

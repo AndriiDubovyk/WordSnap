@@ -1,4 +1,4 @@
-package com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case
+package com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.flashcard
 
 data class FlashcardUseCases(
     val getFlashcards: GetFlashcards,

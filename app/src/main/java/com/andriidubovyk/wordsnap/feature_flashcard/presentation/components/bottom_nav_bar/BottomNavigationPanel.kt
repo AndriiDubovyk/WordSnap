@@ -1,9 +1,6 @@
 package com.andriidubovyk.wordsnap.feature_flashcard.presentation.bottom_nav_bar
 
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -30,7 +27,10 @@ fun BottomNavigationPanel(navController: NavController) {
                     Icon(imageVector = it.icon, contentDescription = it.title)
                 },
                 label = {
-                    Text(it.title)
+                    Text(
+                        text = it.title,
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             )
         }

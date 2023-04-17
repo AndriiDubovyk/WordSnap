@@ -9,5 +9,8 @@ sealed class AddEditFlashcardEvent{
     data class ChangeDefinitionFocus(val focusState: FocusState): AddEditFlashcardEvent()
     data class EnterTranslation(val value: String): AddEditFlashcardEvent()
     data class ChangeTranslationFocus(val focusState: FocusState): AddEditFlashcardEvent()
+    object GetDefinitionsFromDictionary: AddEditFlashcardEvent()
+    data class SelectDefinitionFromDialog(val value: String): AddEditFlashcardEvent()
+    object CloseDefinitonsDialog: AddEditFlashcardEvent()
     object SaveFlashcard: AddEditFlashcardEvent()
 }

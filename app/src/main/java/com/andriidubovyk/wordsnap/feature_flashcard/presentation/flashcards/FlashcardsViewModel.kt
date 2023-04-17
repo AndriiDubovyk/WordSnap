@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andriidubovyk.wordsnap.feature_flashcard.domain.model.Flashcard
-import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.FlashcardUseCases
+import com.andriidubovyk.wordsnap.feature_flashcard.domain.use_case.flashcard.FlashcardUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
