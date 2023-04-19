@@ -12,6 +12,7 @@ import com.andriidubovyk.wordsnap.presentation.bottom_nav_bar.StudyScreen
 import com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.AddEditFlashcardScreen
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.FlashcardScreen
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.PracticeFlashcardScreen
+import com.andriidubovyk.wordsnap.presentation.screens.settings.SettingsScreen
 
 @Composable
 fun NavigationHost(
@@ -60,6 +61,9 @@ fun NavigationHost(
         }
         composable(route = Screen.Account.route) {
             AccountScreen()
+        }
+        composable(route = Screen.Settings.route) {
+            SettingsScreen()
         }
     }
 }

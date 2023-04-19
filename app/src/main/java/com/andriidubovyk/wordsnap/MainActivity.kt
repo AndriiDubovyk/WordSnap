@@ -1,5 +1,9 @@
 package com.andriidubovyk.wordsnap
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.andriidubovyk.wordsnap.presentation.bottom_nav_bar.BottomNavigationPanel
 import com.andriidubovyk.wordsnap.presentation.navigation.NavigationHost
+import com.andriidubovyk.wordsnap.presentation.screens.settings.utils.NotificationReceiver
 import com.andriidubovyk.wordsnap.ui.theme.WordSnapTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
         setContent {
             WordSnapTheme {
                 // A surface container using the 'background' color from the theme
@@ -39,6 +45,21 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.notification_channel_name)
+            val descriptionText = getString(R.string.notification_channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(NotificationReceiver.channelID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }

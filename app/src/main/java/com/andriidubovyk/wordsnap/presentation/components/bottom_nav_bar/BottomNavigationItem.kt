@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dataset
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 
@@ -26,5 +27,10 @@ sealed class BottomNavigationItem(
         title = "Account",
         icon = Icons.Default.Person,
         screen_route = Screen.Account.route
+    )
+    object Settings: BottomNavigationItem(
+        title = "Settings",
+        icon = Icons.Default.Settings,
+        screen_route = Screen.Settings.route
     )
 }

@@ -12,6 +12,7 @@ fun BottomNavigationPanel(navController: NavController) {
         BottomNavigationItem.Flashcards,
         BottomNavigationItem.Study,
         BottomNavigationItem.Account,
+        BottomNavigationItem.Settings
     )
     val backStackEntry = navController.currentBackStackEntryAsState()
     BottomAppBar {

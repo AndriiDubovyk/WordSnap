@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Word Snap</string>
     <string name="web_client_id" translatable="false">992688280349-l1hqvbrdb4k134n9kp64b005kpte3jms.apps.googleusercontent.com</string>
+    <string name="notification_channel_name" translatable="false">Word Snap notifications</string>
+    <string name="notification_channel_description" translatable="false">A reminder to learn new words</string>
+    <string name="preference_file_key" translatable="false">shared_preferences</string>
+    <string name="saved_notification_hour" translatable="false">saved_notification_hour</string>
+    <string name="saved_notification_minute" translatable="false">saved_notification_minute</string>
+    <string name="saved_notification_enabled" translatable="false">saved_notification_enabled</string>
 </resources>
