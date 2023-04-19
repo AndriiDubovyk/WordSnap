@@ -125,14 +125,14 @@ class AddEditFlashcardViewModel @Inject constructor(
     private fun processGetDefinitionsFromDictionary() {
         wordDetailUseCases.getWordDetail(flashcardWord.value.text).onEach { result ->
             when (result) {
-                is com.andriidubovyk.wordsnap.common.Resource.Error -> {
+                is Resource.Error -> {
                     _actionFlow.emit(
                         AddEditFlashcardAction.ShowSnackbar(
                             message = "Couldn't load this word definition"
                         )
                     )
                 }
-                is com.andriidubovyk.wordsnap.common.Resource.Success -> {
+                is Resource.Success -> {
                     val definitions = result.data?.definitions
                     definitions?.let {
                         _onlineDefinitionsDialog.value = onlineDefinitionsDialog.value.copy(

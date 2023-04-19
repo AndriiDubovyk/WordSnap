@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Word Snap</string>
+    <string name="app_name" translatable="false">Word Snap</string>
+    <string name="web_client_id" translatable="false">992688280349-l1hqvbrdb4k134n9kp64b005kpte3jms.apps.googleusercontent.com</string>
 </resources>
