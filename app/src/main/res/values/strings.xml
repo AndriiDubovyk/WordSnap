@@ -7,4 +7,32 @@
     <string name="saved_notification_hour" translatable="false">saved_notification_hour</string>
     <string name="saved_notification_minute" translatable="false">saved_notification_minute</string>
     <string name="saved_notification_enabled" translatable="false">saved_notification_enabled</string>
+    <string name="ready_to_start">Ready to start?</string>
+    <string name="start">Start</string>
+    <string name="enbale_notifications">Enable notifications</string>
+    <string name="notifications_time">Notifications time</string>
+    <string name="save">Save</string>
+    <string name="bad">BAD</string>
+    <string name="ok">OK</string>
+    <string name="good">GOOD</string>
+    <string name="show_answer">Show Answer</string>
+    <string name="next">Next</string>
+    <string name="definition">Definition</string>
+    <string name="translation">Translation</string>
+    <string name="word">Word</string>
+    <string name="your_flashcards">Your Flashcards</string>
+    <string name="add_flashcard">Add flashcard</string>
+    <string name="flashcard_deleted">Flashcard deleted</string>
+    <string name="undo">Undo</string>
+    <string name="score">Score</string>
+    <string name="save_flashcard">Save flashcard</string>
+    <string name="dicitonary">Dictionary</string>
+    <string name="select_definition">Select definition</string>
+    <string name="signed_out">Signed out</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="sign_out">Sign out</string>
+    <string name="backup_flashcard_to_the_cloud">Backup flashcards to the cloud</string>
+    <string name="restore_flashcard_from_the_cloud">Restore flashcards from the cloud</string>
+    <string name="sign_in">Sign in</string>
+    <string name="dont_forget_to_learn_new_words">Don\'t forget to learn new words</string>
 </resources>

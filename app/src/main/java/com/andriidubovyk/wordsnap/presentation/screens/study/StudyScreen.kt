@@ -1,4 +1,4 @@
-package com.andriidubovyk.wordsnap.presentation.bottom_nav_bar
+package com.andriidubovyk.wordsnap.presentation.screens.study
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 
 
@@ -27,7 +29,7 @@ fun StudyScreen(navController: NavController) {
                 shape = CircleShape,
             ) {
                 Text(
-                    text = "Start",
+                    text = stringResource(R.string.start),
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
@@ -40,7 +42,7 @@ fun StudyScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Ready to start?",
+                text = stringResource(R.string.ready_to_start),
                 style = MaterialTheme.typography.headlineLarge
             )
         }

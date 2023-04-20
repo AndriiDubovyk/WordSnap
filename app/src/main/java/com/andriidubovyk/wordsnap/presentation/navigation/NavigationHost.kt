@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.andriidubovyk.wordsnap.presentation.screens.account.AccountScreen
-import com.andriidubovyk.wordsnap.presentation.bottom_nav_bar.StudyScreen
+import com.andriidubovyk.wordsnap.presentation.screens.study.StudyScreen
 import com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.AddEditFlashcardScreen
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.FlashcardScreen
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.PracticeFlashcardScreen

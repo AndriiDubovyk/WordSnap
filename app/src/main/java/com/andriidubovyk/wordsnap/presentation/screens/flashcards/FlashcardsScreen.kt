@@ -12,9 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardItem
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model.FlashcardsEvent
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model.FlashcardsViewModel
@@ -27,7 +30,7 @@ fun FlashcardScreen(
     viewModel: FlashcardsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -41,14 +44,14 @@ fun FlashcardScreen(
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape,
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add flashcard")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add_flashcard))
             }
         }
     ) {
         Column(
             modifier = Modifier.padding(it)
         ) {
-            Text("Your Flashcards")
+            Text(stringResource(R.string.your_flashcards))
             
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -66,8 +69,8 @@ fun FlashcardScreen(
                             viewModel.onEvent(FlashcardsEvent.DeleteFlashcard(flashcard))
                             scope.launch {
                                 val result = snackbarHostState.showSnackbar(
-                                    message = "Flashcard deleted",
-                                    actionLabel = "Undo"
+                                    message = context.getString((R.string.flashcard_deleted)),
+                                    actionLabel = context.getString((R.string.undo))
                                 )
                                 if(result == SnackbarResult.ActionPerformed) {
                                     viewModel.onEvent(FlashcardsEvent.RestoreFlashcard)

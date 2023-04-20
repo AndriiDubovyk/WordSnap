@@ -11,11 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountEvent
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountState
 
@@ -35,7 +37,7 @@ fun AccountViewProfile(
             if(state.userData?.profilePictureUrl != null) {
                 AsyncImage(
                     model = state.userData.profilePictureUrl,
-                    contentDescription = "Profile picture",
+                    contentDescription = stringResource(R.string.profile_picture),
                     modifier = Modifier
                         .size(150.dp)
                         .clip(CircleShape),
@@ -53,7 +55,7 @@ fun AccountViewProfile(
                 Spacer(modifier = Modifier.height(16.dp))
             }
             Button(onClick = { onEvent(AccountEvent.SignOut) }) {
-                Text(text = "Sign out")
+                Text(text = stringResource(R.string.sign_out))
             }
         }
         Column {
@@ -64,7 +66,7 @@ fun AccountViewProfile(
                     .padding(20.dp)
             ) {
                 Text(
-                    text = "Backup flashcards to the cloud",
+                    text = stringResource(R.string.backup_flashcard_to_the_cloud),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -75,7 +77,7 @@ fun AccountViewProfile(
                     .padding(20.dp)
             ) {
                 Text(
-                    text = "Restore flashcards from the cloud",
+                    text = stringResource(R.string.restore_flashcard_from_the_cloud),
                     style = MaterialTheme.typography.titleMedium
                 )
             }

@@ -28,23 +28,17 @@ class AddEditFlashcardViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _flashcardWord = mutableStateOf(
-        FlashcardTextFieldState(
-            hint = "Enter word..."
-        )
+        FlashcardTextFieldState(hint = "...")
     )
     val flashcardWord: State<FlashcardTextFieldState> = _flashcardWord
 
     private val _flashcardDefinition = mutableStateOf(
-        FlashcardTextFieldState(
-            hint = "Enter definition..."
-        )
+        FlashcardTextFieldState(hint = "...")
     )
     val flashcardDefinition: State<FlashcardTextFieldState> = _flashcardDefinition
 
     private val _flashcardTranslation = mutableStateOf(
-        FlashcardTextFieldState(
-            hint = "Enter translation..."
-        )
+        FlashcardTextFieldState(hint = "...")
     )
     val flashcardTranslation: State<FlashcardTextFieldState> = _flashcardTranslation
 

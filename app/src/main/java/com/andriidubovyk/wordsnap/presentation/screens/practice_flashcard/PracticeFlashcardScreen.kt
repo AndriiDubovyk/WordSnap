@@ -7,8 +7,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.PracticeButton
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardAction
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardEvent
@@ -44,13 +46,13 @@ fun PracticeFlashcardScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Word: ${state.flashcard?.word}")
+            Text("${stringResource(R.string.word)}: ${state.flashcard?.word}")
             if (state.isAnswerVisible) {
                 state.flashcard?.definition?.let {
-                    Text("Definition: $it")
+                    Text("${stringResource(R.string.definition)}: $it")
                 }
                 state.flashcard?.translation?.let {
-                    Text("Translation: $it")
+                    Text("${stringResource(R.string.translation)}: $it")
                 }
             }
         }
@@ -68,7 +70,7 @@ fun PracticeFlashcardScreen(
                             PracticeFlashcardEvent.SelectAnswerRating(UserAnswerRating.BAD)
                         )
                     },
-                   text = "BAD",
+                   text = stringResource(R.string.bad),
                    color = Color.Red
                 )
                 PracticeButton(
@@ -78,7 +80,7 @@ fun PracticeFlashcardScreen(
                             PracticeFlashcardEvent.SelectAnswerRating(UserAnswerRating.OK)
                         )
                     },
-                    text = "OK",
+                    text = stringResource(R.string.ok),
                     color = Color.LightGray
                 )
                 PracticeButton(
@@ -88,21 +90,21 @@ fun PracticeFlashcardScreen(
                             PracticeFlashcardEvent.SelectAnswerRating(UserAnswerRating.GOOD)
                         )
                               },
-                    text = "GOOD",
+                    text = stringResource(R.string.good),
                     color = Color.Green
                 )
             } else if (state.userAnswerRating == UserAnswerRating.NONE) {
                 PracticeButton(
                     modifier = Modifier.weight(1f),
                     onClick = { viewModel.onEvent(PracticeFlashcardEvent.ShowAnswer) },
-                    text = "Show Answer",
+                    text = stringResource(R.string.show_answer),
                     color = Color.LightGray
                 )
             } else {
                 PracticeButton(
                     modifier = Modifier.weight(1f),
                     onClick = { viewModel.onEvent(PracticeFlashcardEvent.GoToNext) },
-                    text = "Next",
+                    text = stringResource(R.string.next),
                     color = Color.LightGray
                 )
             }

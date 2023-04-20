@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.domain.model.Flashcard
 
 @Composable
@@ -22,14 +24,14 @@ fun FlashcardItem(
         modifier = modifier
             .background(color = MaterialTheme.colorScheme.surface)
     ) {
-        Text("Word: ${flashcard.word}")
+        Text("${stringResource(R.string.word)}: ${flashcard.word}")
         flashcard.definition?.let {
-            Text("Definition: $it")
+            Text("${stringResource(R.string.definition)}: $it")
         }
         flashcard.translation?.let {
-            Text("Translation: $it")
+            Text("${stringResource(R.string.translation)}: $it")
         }
-        Text("Score: ${flashcard.score}")
+        Text("${stringResource(R.string.score)}: ${flashcard.score}")
 
         IconButton(
             onClick = onDeleteClick,

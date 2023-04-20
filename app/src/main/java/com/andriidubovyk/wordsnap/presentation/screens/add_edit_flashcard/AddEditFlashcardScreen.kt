@@ -14,9 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.components.TransparentHintTextField
 import com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.view_model.AddEditFlashcardAction
 import com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.view_model.AddEditFlashcardEvent
@@ -58,7 +60,7 @@ fun AddEditFlashcardScreen(
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape,
             ) {
-                Icon(imageVector = Icons.Default.Save, contentDescription = "Save flashcard")
+                Icon(imageVector = Icons.Default.Save, contentDescription = stringResource(R.string.save_flashcard))
             }
         }
     ) {
@@ -69,6 +71,10 @@ fun AddEditFlashcardScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Text(
+                text = stringResource(R.string.word),
+                style = MaterialTheme.typography.titleLarge
+            )
             TransparentHintTextField(
                 text = wordState.text,
                 hint = wordState.hint,
@@ -81,6 +87,11 @@ fun AddEditFlashcardScreen(
                 isHintVisible = wordState.isHintVisible,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.headlineSmall
+            )
+            Divider()
+            Text(
+                text = stringResource(R.string.definition),
+                style = MaterialTheme.typography.titleLarge
             )
             TransparentHintTextField(
                 text = definitionState.text,
@@ -101,10 +112,15 @@ fun AddEditFlashcardScreen(
                 }
             ) {
                 Text(
-                    text = "Get from online dictionary",
+                    text = stringResource(R.string.dicitonary),
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
+            Divider()
+            Text(
+                text = stringResource(R.string.translation),
+                style = MaterialTheme.typography.titleLarge
+            )
             TransparentHintTextField(
                 text = translationState.text,
                 hint = translationState.hint,
@@ -128,11 +144,13 @@ fun AddEditFlashcardScreen(
                 ) {
                     Column {
                         Box(
-                            modifier = Modifier.fillMaxWidth().padding(10.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text ="Select definition",
+                                text = stringResource(R.string.select_definition),
                                 style = MaterialTheme.typography.titleLarge
                             )
                         }

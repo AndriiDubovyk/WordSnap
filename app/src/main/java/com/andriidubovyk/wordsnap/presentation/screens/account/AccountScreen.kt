@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountAction
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountEvent
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountState
@@ -75,7 +77,7 @@ fun AccountScreen(
                         googleAuthUiClient.signOut()
                         Toast.makeText(
                             context,
-                            "Signed out",
+                            context.getString(R.string.signed_out),
                             Toast.LENGTH_LONG
                         ).show()
                     }

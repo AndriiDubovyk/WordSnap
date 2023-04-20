@@ -5,8 +5,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.settings.components.TimeDisplay
 import com.andriidubovyk.wordsnap.presentation.screens.settings.utils.Time
 import com.andriidubovyk.wordsnap.presentation.screens.settings.view_model.SettingsEvent
@@ -32,7 +34,7 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Enable notifications")
+            Text(stringResource(R.string.enbale_notifications))
             Switch(
                 checked = state.notificationsEnabled,
                 onCheckedChange = {
@@ -45,7 +47,7 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Notification time")
+            Text(stringResource(R.string.notifications_time))
             TimeDisplay(
                 time = state.notificationsTime,
                 onClick = { isNotificationTimeDialogOpened = true }
@@ -74,7 +76,7 @@ fun SettingsScreen(
                     )
                     isNotificationTimeDialogOpened = false
                 }) {
-                    Text("Save")
+                    Text(stringResource(R.string.save))
                 }
             }
         }

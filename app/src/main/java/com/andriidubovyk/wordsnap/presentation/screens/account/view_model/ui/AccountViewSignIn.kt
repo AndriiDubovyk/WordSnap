@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountEvent
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountState
 
@@ -24,7 +26,7 @@ fun AccountViewSignIn(
         contentAlignment = Alignment.Center
     ) {
         Button(onClick = { onEvent(AccountEvent.SignInClick) }) {
-            Text(text = "Sign in")
+            Text(text = stringResource(R.string.sign_in))
         }
     }
 }
