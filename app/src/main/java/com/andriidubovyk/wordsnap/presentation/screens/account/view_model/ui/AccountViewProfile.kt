@@ -1,8 +1,10 @@
 package com.andriidubovyk.wordsnap.presentation.screens.account.view_model.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,32 +25,60 @@ fun AccountViewProfile(
     onEvent: (AccountEvent) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize()
     ) {
-        if(state.userData?.profilePictureUrl != null) {
-            AsyncImage(
-                model = state.userData.profilePictureUrl,
-                contentDescription = "Profile picture",
+        Column(
+            modifier = Modifier.fillMaxWidth().weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if(state.userData?.profilePictureUrl != null) {
+                AsyncImage(
+                    model = state.userData.profilePictureUrl,
+                    contentDescription = "Profile picture",
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            if(state.userData?.username != null) {
+                Text(
+                    text = state.userData.username,
+                    textAlign = TextAlign.Center,
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            Button(onClick = { onEvent(AccountEvent.SignOut) }) {
+                Text(text = "Sign out")
+            }
+        }
+        Column {
+            Row(
                 modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        if(state.userData?.username != null) {
-            Text(
-                text = state.userData.username,
-                textAlign = TextAlign.Center,
-                fontSize = 36.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        Button(onClick = { onEvent(AccountEvent.SignOut) }) {
-            Text(text = "Sign out")
+                    .fillMaxWidth()
+                    .clickable { onEvent(AccountEvent.BackupFlashcardsToCloud) }
+                    .padding(20.dp)
+            ) {
+                Text(
+                    text = "Backup flashcards to the cloud",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onEvent(AccountEvent.RestoreFlashcardsFromCloud) }
+                    .padding(20.dp)
+            ) {
+                Text(
+                    text = "Restore flashcards from the cloud",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
     }
 }

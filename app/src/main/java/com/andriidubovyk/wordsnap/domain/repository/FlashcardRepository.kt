@@ -13,5 +13,7 @@ interface FlashcardRepository {
 
     suspend fun deleteFlashcard(flashcard: Flashcard)
 
+    suspend fun deleteAllFlashcards()
+
     suspend fun getLowestScoreFlashcards(): List<Flashcard>
 }

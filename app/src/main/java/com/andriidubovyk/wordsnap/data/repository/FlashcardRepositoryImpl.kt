@@ -25,6 +25,10 @@ class FlashcardRepositoryImpl(
         dao.deleteFlashcard(flashcard)
     }
 
+    override suspend fun deleteAllFlashcards() {
+        dao.deleteAllFlashcards()
+    }
+
     override suspend fun getLowestScoreFlashcards(): List<Flashcard> {
         return dao.getLowestScoreFlashcards()
     }

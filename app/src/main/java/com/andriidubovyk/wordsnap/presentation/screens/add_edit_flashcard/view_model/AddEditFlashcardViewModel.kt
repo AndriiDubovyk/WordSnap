@@ -165,6 +165,7 @@ class AddEditFlashcardViewModel @Inject constructor(
             try {
                 flashcardUseCases.addFlashcard(
                     Flashcard(
+                        id = currentFlashcardId,
                         word = flashcardWord.value.text,
                         definition = flashcardDefinition.value.text.takeIf { it.isNotBlank() },
                         translation = flashcardTranslation.value.text.takeIf { it.isNotBlank() },
@@ -173,8 +174,7 @@ class AddEditFlashcardViewModel @Inject constructor(
                             0
                         } else {
                             flashcardUseCases.getFlashcard(currentFlashcardId ?: -1)?.score ?: 0
-                        },
-                        id = currentFlashcardId
+                        }
                     )
                 )
                 _actionFlow.emit(AddEditFlashcardAction.SaveFlashcard)

@@ -47,6 +47,7 @@ object AppModule {
         return FlashcardUseCases(
             getFlashcards = GetFlashcards(repository),
             deleteFlashcard = DeleteFlashcard(repository),
+            deleteAllFlashcards = DeleteAllFlashcards(repository),
             addFlashcard = AddFlashcard(repository),
             getFlashcard = GetFlashcard(repository),
             getLowestScoreFlashcards = GetLowestScoreFlashcards(repository)

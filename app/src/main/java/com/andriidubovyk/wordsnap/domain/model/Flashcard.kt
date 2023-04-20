@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Flashcard(
-    val word: String,
-    val definition: String?,
-    val translation: String?,
+    @PrimaryKey val id: Int? = null,
+    val word: String = "",
+    val definition: String? = null,
+    val translation: String? = null,
     val score: Int = 0,
-    val timestamp: Long,
-    @PrimaryKey val id: Int? = null
+    val timestamp: Long = System.currentTimeMillis()
 )
 
 class InvalidFlashcardException(message: String): Exception(message)

@@ -80,6 +80,13 @@ fun AccountScreen(
                         ).show()
                     }
                 }
+                is AccountAction.ShowToast -> {
+                    Toast.makeText(
+                        context,
+                        action.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }
