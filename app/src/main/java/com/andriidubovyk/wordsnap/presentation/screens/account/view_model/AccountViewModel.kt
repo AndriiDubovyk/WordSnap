@@ -9,6 +9,8 @@ import com.andriidubovyk.wordsnap.domain.model.Flashcard
 import com.andriidubovyk.wordsnap.domain.use_case.flashcard.FlashcardUseCases
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.utils.SignInResult
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.utils.UserData
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -66,24 +69,16 @@ class AccountViewModel @Inject constructor(
     private fun processBackupFlashcardsToCloud() {
         val profileState = state.value as? AccountState.Profile ?: return
         val userData = profileState.userData
-        // TODO: Fix delete all previous flashcard in firebase
         userData?.let { ud ->
-            val flashcardsRef = Firebase.firestore
-                .collection("users").document(ud.userId)
-                .collection("flashcards")
+            val flashcardsRef = getUserFlashcardCollectionRef(ud.userId)
             viewModelScope.launch {
                 val flashcardList = flashcardUseCases.getFlashcards().first()
-                var successCount = 0
-                var errorCount = 0
-                for (flashcard in flashcardList) {
-                    flashcardsRef.document(flashcard.id.toString()).set(flashcard)
-                        .addOnSuccessListener { successCount++ }
-                        .addOnFailureListener { errorCount++ }
+                if(flashcardList.isEmpty()) {
+                    _actionFlow.emit(AccountAction.ShowToast("You don't have any flashcards"))
+                    return@launch
                 }
-                // TODO: Fix success/error message
-                _actionFlow.emit(AccountAction.ShowToast(
-                    "Successfully saved: $successCount, errors: $errorCount"
-                ))
+                flashcardsRef.clearCollection()
+                flashcardsRef.addDocuments(flashcardList)
             }
         }
     }
@@ -92,37 +87,64 @@ class AccountViewModel @Inject constructor(
         val profileState = state.value as? AccountState.Profile ?: return
         val userData = profileState.userData
         userData?.let { ud ->
-            val flashcardsRef = Firebase.firestore
-                .collection("users").document(ud.userId)
-                .collection("flashcards")
+            val flashcardsRef = getUserFlashcardCollectionRef(ud.userId)
             flashcardsRef.get()
-                .addOnSuccessListener { result ->
-                    viewModelScope.launch {
-                        if(result.isEmpty) {
-                            _actionFlow.emit(AccountAction.ShowToast(
-                                "There no flashcards in the cloud"
-                            ))
-                            return@launch
-                        }
-                        var restoredFlashcardCount = 0
-                        for (document in result) {
-                            val flashcard = document.toObject<Flashcard>()
-                            flashcardUseCases.addFlashcard(flashcard)
-                            restoredFlashcardCount++
-                        }
-                        _actionFlow.emit(AccountAction.ShowToast(
-                            "Successfully restored $restoredFlashcardCount flashcards"
-                        ))
-                    }
-                }
+                .addOnSuccessListener { addFlashcardsFromFirebaseResult(it) }
                 .addOnFailureListener {
                     viewModelScope.launch {
-                        _actionFlow.emit(AccountAction.ShowToast(
-                            "Can't restore flashcards"
-                        ))
+                        _actionFlow.emit(AccountAction.ShowToast("Can't restore flashcards"))
                     }
                 }
         }
+    }
+
+    private suspend fun CollectionReference.clearCollection() {
+        this.get().addOnSuccessListener { querySnapshot ->
+            val batch = Firebase.firestore.batch()
+            querySnapshot.documents.forEach { document ->
+                batch.delete(document.reference)
+            }
+            batch.commit()
+        }.await()
+    }
+
+    private fun addFlashcardsFromFirebaseResult(result: QuerySnapshot) {
+        viewModelScope.launch {
+            if(result.isEmpty) {
+                _actionFlow.emit(AccountAction.ShowToast(
+                    "There no flashcards in the cloud"
+                ))
+                return@launch
+            }
+            var restoredFlashcardCount = 0
+            for (document in result) {
+                val flashcard = document.toObject<Flashcard>()
+                flashcardUseCases.addFlashcard(flashcard)
+                restoredFlashcardCount++
+            }
+            _actionFlow.emit(AccountAction.ShowToast(
+                "Successfully restored $restoredFlashcardCount flashcards"
+            ))
+        }
+    }
+
+    private suspend fun CollectionReference.addDocuments(flashcards: List<Flashcard>) {
+        var successCount = 0
+        var errorCount = 0
+        for (flashcard in flashcards) {
+            this.document(flashcard.id.toString()).set(flashcard)
+                .addOnSuccessListener { successCount++ }
+                .addOnFailureListener { errorCount++ }.await()
+        }
+        _actionFlow.emit(AccountAction.ShowToast(
+            "Successfully saved: $successCount, errors: $errorCount"
+        ))
+    }
+
+    private fun getUserFlashcardCollectionRef(userId: String): CollectionReference {
+        return Firebase.firestore
+            .collection("users").document(userId)
+            .collection("flashcards")
     }
 
     private fun resetState() {
