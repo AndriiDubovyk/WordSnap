@@ -68,9 +68,7 @@ class SettingsViewModel @Inject constructor(
             putBoolean(context.getString(R.string.saved_notification_enabled), value)
             apply()
         }
-        if (!value) cancelNotifications()
-        if (value) scheduleNotifications(state.value.notificationsTime)
-
+        applyNotificationsSettings()
     }
 
     private fun processSetNotificationsTime(time: Time) {
@@ -82,8 +80,14 @@ class SettingsViewModel @Inject constructor(
             putInt(context.getString(R.string.saved_notification_minute), time.minute)
             apply()
         }
+        applyNotificationsSettings()
+    }
+
+    private fun applyNotificationsSettings() {
         cancelNotifications()
-        scheduleNotifications(time)
+        if (state.value.notificationsEnabled) {
+            scheduleNotifications(state.value.notificationsTime)
+        }
     }
 
     private fun scheduleNotifications(time: Time) {
