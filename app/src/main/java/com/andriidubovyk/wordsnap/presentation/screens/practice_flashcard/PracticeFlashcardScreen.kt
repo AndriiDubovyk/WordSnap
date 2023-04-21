@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
@@ -17,6 +18,7 @@ import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_m
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardViewModel
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.UserAnswerRating
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
+import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.FlashcardDisplay
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -41,26 +43,16 @@ fun PracticeFlashcardScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().weight(9f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("${stringResource(R.string.word)}: ${state.flashcard?.word}")
-            if (state.isAnswerVisible) {
-                state.flashcard?.definition?.let {
-                    Text("${stringResource(R.string.definition)}: $it")
-                }
-                state.flashcard?.translation?.let {
-                    Text("${stringResource(R.string.translation)}: $it")
-                }
-            }
-        }
+        FlashcardDisplay(
+            modifier = Modifier.weight(1f),
+            flashcard = state.flashcard,
+            isAnswerVisible = state.isAnswerVisible
+        )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .height(80.dp)
         ) {
             if (state.isAnswerVisible && state.userAnswerRating == UserAnswerRating.NONE) {
                 PracticeButton(

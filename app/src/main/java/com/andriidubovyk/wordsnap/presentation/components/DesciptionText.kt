@@ -8,13 +8,15 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 
 @Composable
 fun DescriptionText(
     modifier: Modifier = Modifier,
     descName: String,
-    descValue: String
+    descValue: String,
+    textAlign: TextAlign = TextAlign.Left
 ) {
     Text(
         modifier = modifier,
@@ -26,6 +28,7 @@ fun DescriptionText(
                 append(": $descValue")
             }
         },
-        style = MaterialTheme.typography.titleMedium
+        style = MaterialTheme.typography.titleMedium,
+        textAlign = textAlign
     )
 }

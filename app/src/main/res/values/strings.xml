@@ -43,4 +43,5 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_link" translatable="false">https://www.google.com/</string>
     <string name="delete_flashcard">Delete flashcard</string>
+    <string name="no_words_to_study">No words to study</string>
 </resources>

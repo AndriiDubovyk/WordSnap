@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.andriidubovyk.wordsnap.presentation.components.AdvancedTextField
 
 @Composable
 fun FlashcardFieldWithLabel(
@@ -30,26 +31,12 @@ fun FlashcardFieldWithLabel(
                 style = MaterialTheme.typography.titleMedium,
             )
         }
-        TextField(
+        AdvancedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = { onValueChange(it) },
-            textStyle  = MaterialTheme.typography.bodyLarge,
-            minLines = lines,
-            maxLines = lines,
-            singleLine = lines == 1,
-            placeholder = {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            },
-            shape = RoundedCornerShape(25.dp),
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+            lines = lines,
+            placeholderText = label,
         )
     }
 }

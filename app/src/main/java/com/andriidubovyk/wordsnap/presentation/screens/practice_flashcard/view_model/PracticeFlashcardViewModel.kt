@@ -48,7 +48,7 @@ class PracticeFlashcardViewModel @Inject constructor(
                 val flashcardsToStudy = flashcardUseCases.getLowestScoreFlashcards()
                 if (flashcardsToStudy.isEmpty()) return@launch
                 _state.value = state.value.copy(
-                    flashcard = flashcardsToStudy.shuffled()[0] // get random
+                    flashcard = flashcardsToStudy.random() // get random
                 )
             }
         }
