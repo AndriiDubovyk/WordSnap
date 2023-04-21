@@ -3,7 +3,6 @@ package com.andriidubovyk.wordsnap.presentation.screens.add_edit_flashcard.view_
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.focus.FocusState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,20 +26,14 @@ class AddEditFlashcardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _flashcardWord = mutableStateOf(
-        FlashcardTextFieldState(hint = "...")
-    )
-    val flashcardWord: State<FlashcardTextFieldState> = _flashcardWord
+    private val _flashcardWord = mutableStateOf("")
+    val flashcardWord: State<String> = _flashcardWord
 
-    private val _flashcardDefinition = mutableStateOf(
-        FlashcardTextFieldState(hint = "...")
-    )
-    val flashcardDefinition: State<FlashcardTextFieldState> = _flashcardDefinition
+    private val _flashcardDefinition = mutableStateOf("")
+    val flashcardDefinition: State<String> = _flashcardDefinition
 
-    private val _flashcardTranslation = mutableStateOf(
-        FlashcardTextFieldState(hint = "...")
-    )
-    val flashcardTranslation: State<FlashcardTextFieldState> = _flashcardTranslation
+    private val _flashcardTranslation = mutableStateOf("")
+    val flashcardTranslation: State<String> = _flashcardTranslation
 
     private val _onlineDefinitionsDialog = mutableStateOf(OnlineDefinitionsDialogState())
     val onlineDefinitionsDialog: State<OnlineDefinitionsDialogState> = _onlineDefinitionsDialog
@@ -59,13 +52,10 @@ class AddEditFlashcardViewModel @Inject constructor(
     fun onEvent(event: AddEditFlashcardEvent) {
         when (event) {
             is AddEditFlashcardEvent.EnterWord -> processEnterWord(event.value)
-            is AddEditFlashcardEvent.ChangeWordFocus -> processChangeWordFocus(event.focusState)
             is AddEditFlashcardEvent.EnterDefinition -> processEnterDefinition(event.value)
-            is AddEditFlashcardEvent.ChangeDefinitionFocus -> processChangeDefinitionFocus(event.focusState)
             is AddEditFlashcardEvent.EnterTranslation -> processEnterTranslation(event.value)
-            is AddEditFlashcardEvent.ChangeTranslationFocus -> processChangeTranslationFocus(event.focusState)
             is AddEditFlashcardEvent.GetDefinitionsFromDictionary -> processGetDefinitionsFromDictionary()
-            is AddEditFlashcardEvent.CloseDefinitonsDialog -> processCloseDefinitionsDialog()
+            is AddEditFlashcardEvent.CloseDefinitionsDialog -> processCloseDefinitionsDialog()
             is AddEditFlashcardEvent.SelectDefinitionFromDialog -> processSelectDefinitionFromDialog(event.value)
             is AddEditFlashcardEvent.SaveFlashcard -> processSaveFlashcard()
         }
@@ -76,18 +66,9 @@ class AddEditFlashcardViewModel @Inject constructor(
         viewModelScope.launch {
             flashcardUseCases.getFlashcard(id)?.also { flashcard ->
                 currentFlashcardId = flashcard.id
-                _flashcardWord.value = flashcardWord.value.copy(
-                    text = flashcard.word,
-                    isHintVisible = false
-                )
-                _flashcardDefinition.value = flashcardDefinition.value.copy(
-                    text = flashcard.definition ?: "",
-                    isHintVisible = flashcard.definition.isNullOrBlank()
-                )
-                _flashcardTranslation.value = flashcardTranslation.value.copy(
-                    text = flashcard.translation ?: "",
-                    isHintVisible = flashcard.translation.isNullOrBlank()
-                )
+                _flashcardWord.value = flashcard.word
+                _flashcardDefinition.value = flashcard.definition ?: ""
+                _flashcardTranslation.value = flashcard.translation ?: ""
             }
         }
     }
@@ -96,28 +77,16 @@ class AddEditFlashcardViewModel @Inject constructor(
         setText(_flashcardWord, value)
     }
 
-    private fun processChangeWordFocus(focusState: FocusState) {
-        setFocus(_flashcardWord, focusState)
-    }
-
     private fun processEnterDefinition(value: String) {
         setText(_flashcardDefinition, value)
-    }
-
-    private fun processChangeDefinitionFocus(focusState: FocusState) {
-        setFocus(_flashcardDefinition, focusState)
     }
 
     private fun processEnterTranslation(value: String) {
         setText(_flashcardTranslation, value)
     }
 
-    private fun processChangeTranslationFocus(focusState: FocusState) {
-        setFocus(_flashcardTranslation, focusState)
-    }
-
     private fun processGetDefinitionsFromDictionary() {
-        wordDetailUseCases.getWordDetail(flashcardWord.value.text).onEach { result ->
+        wordDetailUseCases.getWordDetail(flashcardWord.value).onEach { result ->
             when (result) {
                 is Resource.Error -> {
                     _actionFlow.emit(
@@ -147,10 +116,7 @@ class AddEditFlashcardViewModel @Inject constructor(
     }
 
     private fun processSelectDefinitionFromDialog(definition: String) {
-        _flashcardDefinition.value = flashcardDefinition.value.copy(
-            text = definition,
-            isHintVisible = false
-        )
+        _flashcardDefinition.value = definition
         processCloseDefinitionsDialog()
     }
 
@@ -160,9 +126,9 @@ class AddEditFlashcardViewModel @Inject constructor(
                 flashcardUseCases.addFlashcard(
                     Flashcard(
                         id = currentFlashcardId,
-                        word = flashcardWord.value.text,
-                        definition = flashcardDefinition.value.text.takeIf { it.isNotBlank() },
-                        translation = flashcardTranslation.value.text.takeIf { it.isNotBlank() },
+                        word = flashcardWord.value,
+                        definition = flashcardDefinition.value.takeIf { it.isNotBlank() },
+                        translation = flashcardTranslation.value.takeIf { it.isNotBlank() },
                         timestamp = System.currentTimeMillis(),
                         score = if (currentFlashcardId == -1) {
                             0
@@ -183,20 +149,9 @@ class AddEditFlashcardViewModel @Inject constructor(
     }
 
     private fun setText(
-        fieldState: MutableState<FlashcardTextFieldState>,
+        fieldState: MutableState<String>,
         text: String
     ) {
-        fieldState.value = fieldState.value.copy(
-            text = text
-        )
-    }
-
-    private fun setFocus(
-        fieldState: MutableState<FlashcardTextFieldState>,
-        focusState: FocusState
-    ) {
-        fieldState.value = fieldState.value.copy(
-            isHintVisible = !focusState.isFocused && fieldState.value.text.isBlank()
-        )
+        fieldState.value = text
     }
 }
