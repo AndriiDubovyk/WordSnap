@@ -71,7 +71,10 @@ fun AccountViewProfile(
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                     Button(onClick = { onEvent(AccountEvent.SignOut) }) {
-                        Text(text = stringResource(R.string.sign_out))
+                        Text(
+                            text = stringResource(R.string.sign_out),
+                            style = MaterialTheme.typography.titleLarge
+                        )
                     }
                 }
             }
@@ -101,7 +104,6 @@ fun AccountViewProfile(
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Divider()
         }
     }
 

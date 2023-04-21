@@ -12,7 +12,7 @@
     <string name="saved_notification_enabled" translatable="false">saved_notification_enabled</string>
     <string name="ready_to_start">Ready to start?</string>
     <string name="start">Start</string>
-    <string name="enbale_notifications">Enable notifications</string>
+    <string name="enable_notifications">Enable notifications</string>
     <string name="notifications_time">Notifications time</string>
     <string name="save">Save</string>
     <string name="bad">BAD</string>
@@ -42,4 +42,6 @@
     <string name="cancel">Cancel</string>
     <string name="before_backup_message">Are you sure you want to back up your local flashcards? You can lose your flashcards in the cloud.</string>
     <string name="before_restore_message">Are you sure you want to recover flash cards from the cloud? You may lose flashcards local cards.</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_link" translatable="false">https://www.google.com/</string>
 </resources>

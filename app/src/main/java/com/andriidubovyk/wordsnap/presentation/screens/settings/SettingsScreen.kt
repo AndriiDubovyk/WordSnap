@@ -1,14 +1,17 @@
 package com.andriidubovyk.wordsnap.presentation.screens.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.andriidubovyk.wordsnap.R
+import com.andriidubovyk.wordsnap.presentation.screens.settings.components.SettingsRow
 import com.andriidubovyk.wordsnap.presentation.screens.settings.components.TimeDisplay
 import com.andriidubovyk.wordsnap.presentation.screens.settings.utils.Time
 import com.andriidubovyk.wordsnap.presentation.screens.settings.view_model.SettingsEvent
@@ -20,21 +23,16 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-
+    val uriHandler = LocalUriHandler.current
+    val privacyPolicyLink = stringResource(R.string.privacy_policy_link)
     var isNotificationTimeDialogOpened  by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(15.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(stringResource(R.string.enbale_notifications))
+    Column(modifier = Modifier.fillMaxSize(),) {
+        SettingsRow {
+            Text(
+                text = stringResource(R.string.enable_notifications),
+                style = MaterialTheme.typography.titleMedium
+            )
             Switch(
                 checked = state.notificationsEnabled,
                 onCheckedChange = {
@@ -42,17 +40,27 @@ fun SettingsScreen(
                 }
             )
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(stringResource(R.string.notifications_time))
+        Divider()
+        SettingsRow {
+            Text(
+                text = stringResource(R.string.notifications_time),
+                style = MaterialTheme.typography.titleMedium
+            )
             TimeDisplay(
                 time = state.notificationsTime,
                 onClick = { isNotificationTimeDialogOpened = true }
             )
         }
+        Divider()
+        SettingsRow(
+            modifier = Modifier.clickable { uriHandler.openUri(privacyPolicyLink) }
+        ) {
+            Text(
+                text = stringResource(R.string.privacy_policy),
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        Divider()
     }
     
     if (isNotificationTimeDialogOpened) {
@@ -76,7 +84,10 @@ fun SettingsScreen(
                     )
                     isNotificationTimeDialogOpened = false
                 }) {
-                    Text(stringResource(R.string.save))
+                    Text(
+                        text = stringResource(R.string.save),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                 }
             }
         }
