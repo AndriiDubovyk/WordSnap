@@ -1,11 +1,14 @@
 package com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andriidubovyk.wordsnap.domain.model.Flashcard
 import com.andriidubovyk.wordsnap.domain.use_case.flashcard.FlashcardUseCases
+import com.andriidubovyk.wordsnap.domain.utils.FlashcardOrder
+import com.andriidubovyk.wordsnap.domain.utils.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -25,23 +28,30 @@ class FlashcardsViewModel @Inject constructor(
 
     private var getFlashcardsJob: Job? = null
 
+    companion object {
+        val DEFAULT_ORDER = FlashcardOrder.Date(OrderType.Descending)
+    }
+
     init {
-        initFlashcards()
+        getFlashcards(DEFAULT_ORDER)
     }
 
     fun onEvent(event: FlashcardsEvent) {
         when (event) {
             is FlashcardsEvent.DeleteFlashcard -> processDeleteFlashcard(event.flashcard)
             is FlashcardsEvent.RestoreFlashcard -> processRestoreFlashcard()
+            is FlashcardsEvent.Order -> processOrder(event.flashcardOrder)
+            is FlashcardsEvent.ToggleOrderSection -> processToggleOrderSection()
         }
     }
 
-    private fun initFlashcards() {
+    private fun getFlashcards(order: FlashcardOrder) {
         getFlashcardsJob?.cancel()
-        getFlashcardsJob = flashcardUseCases.getFlashcards()
+        getFlashcardsJob = flashcardUseCases.getFlashcards(order)
             .onEach { flashcards ->
                 _state.value = state.value.copy(
                     flashcards = flashcards,
+                    flashcardOrder = order
                 )
             }
             .launchIn(viewModelScope)
@@ -59,5 +69,19 @@ class FlashcardsViewModel @Inject constructor(
             flashcardUseCases.addFlashcard(recentlyDeletedFlashcard ?: return@launch)
             recentlyDeletedFlashcard = null
         }
+    }
+
+    private fun processOrder(order: FlashcardOrder) {
+        if (state.value.flashcards::class == order::class &&
+            state.value.flashcardOrder.orderType == order.orderType) {
+            return // if we have same order we must change nothing
+        }
+        getFlashcards(order)
+    }
+
+    private fun processToggleOrderSection() {
+        _state.value = state.value.copy(
+            isOrderSectionVisible = !state.value.isOrderSectionVisible
+        )
     }
 }

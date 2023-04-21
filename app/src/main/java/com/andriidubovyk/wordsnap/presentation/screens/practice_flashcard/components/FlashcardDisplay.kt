@@ -1,6 +1,5 @@
 package com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components
 
-import android.widget.Space
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
