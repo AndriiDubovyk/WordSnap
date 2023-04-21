@@ -13,15 +13,15 @@ class GetWordDetail(
     private val repository: WordDetailRepository
 ) {
 
-    operator fun invoke(word: String): Flow<com.andriidubovyk.wordsnap.common.Resource<WordDetail>> = flow {
+    operator fun invoke(word: String): Flow<Resource<WordDetail>> = flow {
         try {
-            emit(com.andriidubovyk.wordsnap.common.Resource.Loading())
+            emit(Resource.Loading())
             val wordDetail = repository.getWordDetail(word).toWordDetail()
-            emit(com.andriidubovyk.wordsnap.common.Resource.Success(wordDetail))
+            emit(Resource.Success(wordDetail))
         } catch(e: HttpException) {
-            emit(com.andriidubovyk.wordsnap.common.Resource.Error(e.localizedMessage ?: "An unexpected error occurred."))
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred."))
         } catch(e: IOException) {
-            emit(com.andriidubovyk.wordsnap.common.Resource.Error("Couldn't reach server. Check your internet connection."))
+            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         }
     }
 }
