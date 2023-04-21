@@ -112,7 +112,7 @@ fun AddEditFlashcardScreen(
                 }
             ) {
                 Text(
-                    text = stringResource(R.string.dicitonary),
+                    text = stringResource(R.string.dictionary),
                     style = MaterialTheme.typography.titleLarge,
                 )
             }

@@ -23,13 +23,12 @@
     <string name="definition">Definition</string>
     <string name="translation">Translation</string>
     <string name="word">Word</string>
-    <string name="your_flashcards">Your Flashcards</string>
     <string name="add_flashcard">Add flashcard</string>
     <string name="flashcard_deleted">Flashcard deleted</string>
     <string name="undo">Undo</string>
     <string name="score">Score</string>
     <string name="save_flashcard">Save flashcard</string>
-    <string name="dicitonary">Dictionary</string>
+    <string name="dictionary">Dictionary</string>
     <string name="select_definition">Select definition</string>
     <string name="signed_out">Signed out</string>
     <string name="profile_picture">Profile picture</string>
@@ -38,10 +37,11 @@
     <string name="restore_flashcard_from_the_cloud">Restore flashcards from the cloud</string>
     <string name="sign_in">Sign in</string>
     <string name="dont_forget_to_learn_new_words">Don\'t forget to learn new words</string>
-    <string name="confrim">Confirm</string>
+    <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="before_backup_message">Are you sure you want to back up your local flashcards? You can lose your flashcards in the cloud.</string>
     <string name="before_restore_message">Are you sure you want to recover flash cards from the cloud? You may lose flashcards local cards.</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_link" translatable="false">https://www.google.com/</string>
+    <string name="delete_flashcard">Delete flashcard</string>
 </resources>

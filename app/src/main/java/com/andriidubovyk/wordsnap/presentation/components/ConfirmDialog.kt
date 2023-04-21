@@ -72,7 +72,7 @@ fun ConfirmDialog(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.confrim),
+                        text = stringResource(R.string.confirm),
                         color = Color.Blue,
                         fontWeight = FontWeight.SemiBold
                     )

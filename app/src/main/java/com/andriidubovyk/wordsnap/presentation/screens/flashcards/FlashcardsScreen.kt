@@ -51,20 +51,19 @@ fun FlashcardScreen(
         Column(
             modifier = Modifier.padding(it)
         ) {
-            Text(stringResource(R.string.your_flashcards))
-            
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
+                item{ Spacer(modifier = Modifier.height(10.dp)) }
                 items(state.flashcards) { flashcard ->
                     FlashcardItem(
                         flashcard = flashcard,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                navController.navigate(Screen.AddEditFlashcard.route + "?flashcardId=${flashcard.id}")
-                            },
+                        onClick = {
+                            navController.navigate(Screen.AddEditFlashcard.route + "?flashcardId=${flashcard.id}")
+                        },
                         onDeleteClick = {
                             viewModel.onEvent(FlashcardsEvent.DeleteFlashcard(flashcard))
                             scope.launch {
@@ -79,6 +78,7 @@ fun FlashcardScreen(
                         }
                     )
                 }
+                item{ Spacer(modifier = Modifier.height(10.dp)) }
             }
         }
     }
