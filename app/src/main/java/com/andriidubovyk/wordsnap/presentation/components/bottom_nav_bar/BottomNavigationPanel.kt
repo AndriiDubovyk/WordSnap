@@ -1,7 +1,9 @@
 package com.andriidubovyk.wordsnap.presentation.bottom_nav_bar
 
+import androidx.compose.foundation.background
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.andriidubovyk.wordsnap.presentation.components.bottom_nav_bar.BottomNavigationItem
@@ -15,7 +17,7 @@ fun BottomNavigationPanel(navController: NavController) {
         BottomNavigationItem.Settings
     )
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomAppBar {
+    BottomAppBar{
         items.forEach {
             NavigationBarItem(
                 selected = it.screen_route == backStackEntry.value?.destination?.route,
