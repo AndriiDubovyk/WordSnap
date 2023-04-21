@@ -10,7 +10,6 @@
     <string name="saved_notification_hour" translatable="false">saved_notification_hour</string>
     <string name="saved_notification_minute" translatable="false">saved_notification_minute</string>
     <string name="saved_notification_enabled" translatable="false">saved_notification_enabled</string>
-    <string name="ready_to_start">Ready to start?</string>
     <string name="start">Start</string>
     <string name="enable_notifications">Enable notifications</string>
     <string name="notifications_time">Notifications time</string>
