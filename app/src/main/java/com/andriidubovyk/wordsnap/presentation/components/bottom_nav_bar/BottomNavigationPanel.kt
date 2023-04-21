@@ -23,7 +23,7 @@ fun BottomNavigationPanel(navController: NavController) {
                     navController.navigate(it.screen_route) {
                         launchSingleTop = true // Don't navigate if we are already at this tab
                     }
-                          },
+                },
                 icon = {
                     Icon(imageVector = it.icon, contentDescription = it.title)
                 },

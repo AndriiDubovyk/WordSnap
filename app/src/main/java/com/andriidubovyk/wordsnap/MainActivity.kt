@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -15,15 +16,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.andriidubovyk.wordsnap.presentation.bottom_nav_bar.BottomNavigationPanel
+import com.andriidubovyk.wordsnap.presentation.components.BannerAdView
+import com.andriidubovyk.wordsnap.presentation.components.top_bar.TopBar
 import com.andriidubovyk.wordsnap.presentation.navigation.NavigationHost
 import com.andriidubovyk.wordsnap.presentation.screens.settings.utils.NotificationReceiver
 import com.andriidubovyk.wordsnap.ui.theme.WordSnapTheme
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
         createNotificationChannel()
         setContent {
             WordSnapTheme {
@@ -34,9 +39,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     Scaffold(
-                        bottomBar = {
-                            BottomNavigationPanel(navController = navController)
-                        }
+                        bottomBar = { BottomNavigationPanel(navController = navController) },
+                        topBar = { TopBar() }
                     ) {
                         NavigationHost(
                             navController = navController,

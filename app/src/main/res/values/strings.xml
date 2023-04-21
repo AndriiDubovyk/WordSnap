@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">Word Snap</string>
     <string name="web_client_id" translatable="false">992688280349-l1hqvbrdb4k134n9kp64b005kpte3jms.apps.googleusercontent.com</string>
+    <string name="ad_mob_app_id" translatable="false">ca-app-pub-2038226066211359~4029978762</string>
+    <string name="ad_mob_banner_id" translatable="false">ca-app-pub-2038226066211359/2542224002</string>
+    <string name="ad_mob_test_banner_id" translatable="false">	ca-app-pub-3940256099942544/6300978111</string>
     <string name="notification_channel_name" translatable="false">Word Snap notifications</string>
     <string name="notification_channel_description" translatable="false">A reminder to learn new words</string>
     <string name="preference_file_key" translatable="false">shared_preferences</string>
