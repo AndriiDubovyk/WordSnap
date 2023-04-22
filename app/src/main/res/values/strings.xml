@@ -48,4 +48,6 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="date">Date</string>
+    <string name="flahscard_practice_type_hint">You can type your answer if you want</string>
+    <string name="pronounce_the_word">Pronounce the word</string>
 </resources>

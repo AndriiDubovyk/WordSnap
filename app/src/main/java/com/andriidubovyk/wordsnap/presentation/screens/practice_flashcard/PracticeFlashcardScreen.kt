@@ -1,5 +1,7 @@
 package com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard
 
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,6 +23,7 @@ import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_m
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.FlashcardDisplay
 import kotlinx.coroutines.flow.collectLatest
+import java.util.*
 
 @Composable
 fun PracticeFlashcardScreen(
@@ -28,12 +32,28 @@ fun PracticeFlashcardScreen(
 ) {
 
     val state = viewModel.state.value
+    val context = LocalContext.current
+
+    // Init text TTS
+    lateinit var textToSpeech: TextToSpeech
+    textToSpeech = TextToSpeech(context) { result ->
+        if (result == TextToSpeech.SUCCESS) {
+            textToSpeech.language = Locale.US
+            textToSpeech.setSpeechRate(1f)
+        }
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.actionFlow.collectLatest { action ->
             when(action) {
                 is PracticeFlashcardAction.GoToNextFlashcardPractice -> {
                     navController.navigate(Screen.PracticeFlashcard.route)
+                }
+                is PracticeFlashcardAction.PronounceWord -> {
+                    // Get state from view model to get actual info
+                    viewModel.state.value.flashcard?.let {
+                        textToSpeech.speak(it.word, TextToSpeech.QUEUE_ADD, null, null)
+                    }
                 }
             }
         }
@@ -46,7 +66,8 @@ fun PracticeFlashcardScreen(
         FlashcardDisplay(
             modifier = Modifier.weight(1f),
             flashcard = state.flashcard,
-            isAnswerVisible = state.isAnswerVisible
+            isAnswerVisible = state.isAnswerVisible,
+            onEvent = { viewModel.onEvent(it) }
         )
 
         Row(

@@ -1,5 +1,6 @@
 package com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -35,6 +36,7 @@ class PracticeFlashcardViewModel @Inject constructor(
             is PracticeFlashcardEvent.ShowAnswer -> processShowAnswer()
             is PracticeFlashcardEvent.SelectAnswerRating -> processSelectAnswerRating(event.value)
             is PracticeFlashcardEvent.GoToNext -> processGoToNext()
+            is PracticeFlashcardEvent.PronounceWord -> processPronounceWord()
         }
     }
 
@@ -51,6 +53,12 @@ class PracticeFlashcardViewModel @Inject constructor(
                     flashcard = flashcardsToStudy.random() // get random
                 )
             }
+        }
+    }
+
+    private fun processPronounceWord() {
+        viewModelScope.launch {
+            _actionFlow.emit(PracticeFlashcardAction.PronounceWord)
         }
     }
 
