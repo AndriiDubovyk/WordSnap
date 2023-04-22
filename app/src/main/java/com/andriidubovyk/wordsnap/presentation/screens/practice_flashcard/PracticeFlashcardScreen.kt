@@ -1,12 +1,9 @@
 package com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard
 
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -15,13 +12,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
+import com.andriidubovyk.wordsnap.presentation.navigation.Screen
+import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.FlashcardDisplay
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.PracticeButton
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardAction
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardEvent
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardViewModel
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.UserAnswerRating
-import com.andriidubovyk.wordsnap.presentation.navigation.Screen
-import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components.FlashcardDisplay
 import kotlinx.coroutines.flow.collectLatest
 import java.util.*
 

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.domain.model.Flashcard
 import com.andriidubovyk.wordsnap.presentation.components.AdvancedTextField
-import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.DescriptionText
+import com.andriidubovyk.wordsnap.presentation.components.DescriptionText
 import com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.view_model.PracticeFlashcardEvent
 import androidx.compose.ui.unit.dp as dp
 

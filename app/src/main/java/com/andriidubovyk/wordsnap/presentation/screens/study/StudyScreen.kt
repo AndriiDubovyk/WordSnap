@@ -1,7 +1,6 @@
 package com.andriidubovyk.wordsnap.presentation.screens.study
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,7 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
-import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.DescriptionText
+import com.andriidubovyk.wordsnap.presentation.components.DescriptionText
 import com.andriidubovyk.wordsnap.presentation.screens.study.view_model.StudyViewModel
 
 

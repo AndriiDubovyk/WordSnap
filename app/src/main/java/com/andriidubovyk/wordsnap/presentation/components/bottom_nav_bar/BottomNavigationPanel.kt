@@ -1,12 +1,13 @@
-package com.andriidubovyk.wordsnap.presentation.bottom_nav_bar
+package com.andriidubovyk.wordsnap.presentation.components.bottom_nav_bar
 
-import androidx.compose.foundation.background
-import androidx.compose.material3.*
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.andriidubovyk.wordsnap.presentation.components.bottom_nav_bar.BottomNavigationItem
 
 @Composable
 fun BottomNavigationPanel(navController: NavController) {
@@ -17,7 +18,7 @@ fun BottomNavigationPanel(navController: NavController) {
         BottomNavigationItem.Settings
     )
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomAppBar{
+    BottomAppBar(containerColor = MaterialTheme.colorScheme.primary) {
         items.forEach {
             NavigationBarItem(
                 selected = it.screen_route == backStackEntry.value?.destination?.route,
@@ -27,13 +28,7 @@ fun BottomNavigationPanel(navController: NavController) {
                     }
                 },
                 icon = {
-                    Icon(imageVector = it.icon, contentDescription = it.title)
-                },
-                label = {
-                    Text(
-                        text = it.title,
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    Icon(imageVector = it.icon, contentDescription = stringResource(it.titleResourse))
                 }
             )
         }

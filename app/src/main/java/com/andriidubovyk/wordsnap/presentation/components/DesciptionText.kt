@@ -1,4 +1,4 @@
-package com.andriidubovyk.wordsnap.presentation.screens.flashcards.components
+package com.andriidubovyk.wordsnap.presentation.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

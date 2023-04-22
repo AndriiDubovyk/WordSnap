@@ -1,7 +1,5 @@
 package com.andriidubovyk.wordsnap.presentation.screens.practice_flashcard.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +24,7 @@ fun PracticeButton(
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .padding(horizontal = 15.dp, vertical = 10.dp),
+            .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
         Button(
@@ -38,7 +36,7 @@ fun PracticeButton(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }

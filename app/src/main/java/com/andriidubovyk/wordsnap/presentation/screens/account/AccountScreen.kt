@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.andriidubovyk.wordsnap.R
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountAction
@@ -95,8 +94,7 @@ fun AccountScreen(
 
     when (val state = viewModel.state.value) {
         is AccountState.SignIn -> AccountViewSignIn(
-            state = state,
-            onEvent = { viewModel.onEvent(it) }
+            onSignInClick = { viewModel.onEvent(AccountEvent.SignInClick) }
         )
         is AccountState.Profile -> AccountViewProfile(
             state = state,

@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -15,8 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.andriidubovyk.wordsnap.presentation.bottom_nav_bar.BottomNavigationPanel
-import com.andriidubovyk.wordsnap.presentation.components.BannerAdView
+import com.andriidubovyk.wordsnap.presentation.components.bottom_nav_bar.BottomNavigationPanel
 import com.andriidubovyk.wordsnap.presentation.components.top_bar.TopBar
 import com.andriidubovyk.wordsnap.presentation.navigation.NavigationHost
 import com.andriidubovyk.wordsnap.presentation.screens.settings.utils.NotificationReceiver

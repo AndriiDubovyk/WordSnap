@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
-import com.andriidubovyk.wordsnap.presentation.components.AdvancedTextField
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardItem
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardSearchBar

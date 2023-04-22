@@ -10,6 +10,7 @@
     <string name="saved_notification_hour" translatable="false">saved_notification_hour</string>
     <string name="saved_notification_minute" translatable="false">saved_notification_minute</string>
     <string name="saved_notification_enabled" translatable="false">saved_notification_enabled</string>
+    <string name="privacy_policy_link" translatable="false">https://www.google.com/</string>
     <string name="start">Start</string>
     <string name="enable_notifications">Enable notifications</string>
     <string name="notifications_time">Notifications time</string>
@@ -39,9 +40,8 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="before_backup_message">Are you sure you want to back up your local flashcards? You can lose your flashcards in the cloud.</string>
-    <string name="before_restore_message">Are you sure you want to recover flash cards from the cloud? You may lose flashcards local cards.</string>
+    <string name="before_restore_message">Are you sure you want to recover flash cards from the cloud? You may lose local flashcards.</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_link" translatable="false">https://www.google.com/</string>
     <string name="delete_flashcard">Delete flashcard</string>
     <string name="no_words_to_study">No words to study</string>
     <string name="sort">Sort</string>
@@ -53,4 +53,8 @@
     <string name="totatl_score">Total score</string>
     <string name="reset_search">Reset search</string>
     <string name="search">Search</string>
+    <string name="flashcards">Flashcards</string>
+    <string name="study">Study</string>
+    <string name="account">account</string>
+    <string name="settings">settings</string>
 </resources>
