@@ -15,8 +15,8 @@ import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.Accoun
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountEvent
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountState
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.AccountViewModel
-import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.ui.AccountViewProfile
-import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.ui.AccountViewSignIn
+import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.components.AccountViewProfile
+import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.components.AccountViewSignIn
 import com.andriidubovyk.wordsnap.presentation.screens.account.view_model.utils.GoogleAuthUiClient
 import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.flow.collectLatest

@@ -39,7 +39,7 @@ fun StudyScreen(
         ) {
             Text(
                 text = stringResource(R.string.start),
-                style = MaterialTheme.typography.headlineLarge
+                style = MaterialTheme.typography.titleLarge
             )
         }
     }

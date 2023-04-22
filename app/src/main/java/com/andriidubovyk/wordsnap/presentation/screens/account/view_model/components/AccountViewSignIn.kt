@@ -1,4 +1,4 @@
-package com.andriidubovyk.wordsnap.presentation.screens.account.view_model.ui
+package com.andriidubovyk.wordsnap.presentation.screens.account.view_model.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
