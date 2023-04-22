@@ -1,6 +1,5 @@
 package com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -42,12 +41,17 @@ class FlashcardsViewModel @Inject constructor(
             is FlashcardsEvent.RestoreFlashcard -> processRestoreFlashcard()
             is FlashcardsEvent.Order -> processOrder(event.flashcardOrder)
             is FlashcardsEvent.ToggleOrderSection -> processToggleOrderSection()
+            is FlashcardsEvent.ChangeSearchText -> processChangeSearchText(event.searchText)
+            is FlashcardsEvent.ResetSearch -> processResetSearch()
         }
     }
 
-    private fun getFlashcards(order: FlashcardOrder) {
+    private fun getFlashcards(
+        order: FlashcardOrder,
+        searchText: String = ""
+    ) {
         getFlashcardsJob?.cancel()
-        getFlashcardsJob = flashcardUseCases.getFlashcards(order)
+        getFlashcardsJob = flashcardUseCases.getFlashcards(order, searchText)
             .onEach { flashcards ->
                 _state.value = state.value.copy(
                     flashcards = flashcards,
@@ -61,6 +65,26 @@ class FlashcardsViewModel @Inject constructor(
         viewModelScope.launch {
             flashcardUseCases.deleteFlashcard(flashcard)
             recentlyDeletedFlashcard = flashcard
+        }
+    }
+
+    private fun processChangeSearchText(searchText: String) {
+        setSearch(searchText)
+    }
+
+    private fun processResetSearch() {
+        setSearch("")
+    }
+
+    private fun setSearch(searchText: String) {
+        viewModelScope.launch {
+            _state.value = state.value.copy(
+                searchText = searchText
+            )
+            getFlashcards(
+                order = state.value.flashcardOrder,
+                searchText = searchText
+            )
         }
     }
 

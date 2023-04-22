@@ -7,5 +7,6 @@ import com.andriidubovyk.wordsnap.domain.utils.OrderType
 data class FlashcardsState(
     val flashcards: List<Flashcard> = emptyList(),
     val flashcardOrder: FlashcardOrder = FlashcardOrder.Date(OrderType.Descending),
-    val isOrderSectionVisible: Boolean = false
+    val isOrderSectionVisible: Boolean = false,
+    val searchText: String = ""
 )

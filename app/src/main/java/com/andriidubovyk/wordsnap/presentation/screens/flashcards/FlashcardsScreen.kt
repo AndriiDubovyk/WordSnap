@@ -1,13 +1,14 @@
 package com.andriidubovyk.wordsnap.presentation.screens.flashcards
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,11 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
+import com.andriidubovyk.wordsnap.presentation.components.AdvancedTextField
+import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardItem
+import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardSearchBar
+import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.OrderSection
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model.FlashcardsEvent
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.view_model.FlashcardsViewModel
-import com.andriidubovyk.wordsnap.presentation.navigation.Screen
-import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.OrderSection
 import kotlinx.coroutines.launch
 
 @Composable
@@ -56,10 +59,18 @@ fun FlashcardScreen(
             modifier = Modifier.padding(it)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(5.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                FlashcardSearchBar(
+                    modifier = Modifier.fillMaxWidth().weight(1f),
+                    value = state.searchText,
+                    onValueChange = { text -> viewModel.onEvent(FlashcardsEvent.ChangeSearchText(text)) },
+                    onReset = { viewModel.onEvent(FlashcardsEvent.ResetSearch) }
+                )
                 IconButton(
                     onClick = { viewModel.onEvent(FlashcardsEvent.ToggleOrderSection) }
                 ) {
@@ -75,12 +86,13 @@ fun FlashcardScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
                 OrderSection(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary),
                     flashcardOrder = state.flashcardOrder,
                     onOrderChange = { order -> viewModel.onEvent(FlashcardsEvent.Order(order)) }
                 )
             }
             Divider()
+            Spacer(modifier = Modifier.height(10.dp))
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

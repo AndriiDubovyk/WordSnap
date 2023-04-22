@@ -8,5 +8,7 @@ sealed interface FlashcardsEvent {
     object ToggleOrderSection: FlashcardsEvent
 
     data class DeleteFlashcard(val flashcard: Flashcard): FlashcardsEvent
+    data class ChangeSearchText(val searchText: String): FlashcardsEvent
+    object ResetSearch: FlashcardsEvent
     object RestoreFlashcard: FlashcardsEvent
 }

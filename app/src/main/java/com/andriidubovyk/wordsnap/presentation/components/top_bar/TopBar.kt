@@ -19,7 +19,7 @@ import com.andriidubovyk.wordsnap.presentation.components.BannerAdView
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    showAdBanner: Boolean = false
+    showAdBanner: Boolean = true
 ) {
     Row(
         modifier = modifier

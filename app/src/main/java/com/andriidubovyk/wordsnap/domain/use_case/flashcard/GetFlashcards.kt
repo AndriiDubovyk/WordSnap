@@ -5,6 +5,7 @@ import com.andriidubovyk.wordsnap.domain.repository.FlashcardRepository
 import com.andriidubovyk.wordsnap.domain.utils.FlashcardOrder
 import com.andriidubovyk.wordsnap.domain.utils.OrderType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 
 class GetFlashcards(
@@ -12,10 +13,11 @@ class GetFlashcards(
 ) {
 
     operator fun invoke(
-        flashcardOrder: FlashcardOrder = FlashcardOrder.Date(OrderType.Descending)
+        flashcardOrder: FlashcardOrder = FlashcardOrder.Date(OrderType.Descending),
+        searchText: String = ""
     ): Flow<List<Flashcard>> {
         return repository.getFlashcards().map {
-            it.sorted(flashcardOrder)
+            it.sorted(flashcardOrder).searched(searchText)
         }
     }
 
@@ -42,5 +44,18 @@ class GetFlashcards(
                 }
             }
         }
+    }
+
+    private fun List<Flashcard>.searched(
+        searchText: String
+    ): List<Flashcard> {
+        if (searchText.isBlank()) return this
+        return this.filter { it.matches(searchText) }
+    }
+
+    private fun Flashcard.matches(searchText: String): Boolean {
+        return this.word.contains(searchText)
+                || this.definition?.contains(searchText)?: false
+                || this.translation?.contains(searchText)?:false
     }
 }

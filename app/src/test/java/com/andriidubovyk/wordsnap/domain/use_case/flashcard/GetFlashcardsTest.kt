@@ -6,8 +6,7 @@ import com.andriidubovyk.wordsnap.domain.utils.FlashcardOrder
 import com.andriidubovyk.wordsnap.domain.utils.OrderType
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -56,7 +55,147 @@ class GetFlashcardsTest {
     }
 
 
-    private fun fillFlashcardsForSortTest() {
+    @Test
+    fun `should correctly sort by word ascending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Word(OrderType.Ascending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].word <= flashcards[i + 1].word)
+        }
+    }
+
+    @Test
+    fun `should correctly sort by word descending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Word(OrderType.Descending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].word >= flashcards[i + 1].word)
+        }
+    }
+
+    @Test
+    fun `should correctly sort by definition ascending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Definition(OrderType.Ascending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(
+                (flashcards[i].definition ?: "") <= (flashcards[i + 1].definition ?: "")
+            )
+        }
+    }
+
+    @Test
+    fun `should correctly sort by definition descending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Definition(OrderType.Descending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(
+                (flashcards[i].definition ?: "") >= (flashcards[i + 1].definition ?: "")
+            )
+        }
+    }
+
+    @Test
+    fun `should correctly sort by translation ascending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Translation(OrderType.Ascending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(
+                (flashcards[i].translation ?: "") <= (flashcards[i + 1].translation ?: "")
+            )
+        }
+    }
+
+    @Test
+    fun `should correctly sort by translation descending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Translation(OrderType.Descending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(
+                (flashcards[i].translation ?: "") >= (flashcards[i + 1].translation ?: "")
+            )
+        }
+    }
+
+    @Test
+    fun `should correctly sort by score ascending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Score(OrderType.Ascending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].score <= flashcards[i + 1].score)
+        }
+    }
+
+    @Test
+    fun `should correctly sort by score descending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Score(OrderType.Descending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].score >= flashcards[i + 1].score)
+        }
+    }
+
+    @Test
+    fun `should correctly sort by date ascending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Date(OrderType.Ascending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].timestamp <= flashcards[i + 1].timestamp)
+        }
+    }
+
+    @Test
+    fun `should correctly sort by date descending`() = runBlocking {
+        fillFlashcards()
+
+        val flashcards = getFlashcards(FlashcardOrder.Date(OrderType.Descending)).first()
+
+        for(i in 0..flashcards.size - 2) {
+            assertTrue(flashcards[i].timestamp >= flashcards[i + 1].timestamp)
+        }
+    }
+
+    @Test
+    fun `should search correctly`() = runBlocking {
+        val goodWordFlashcard = Flashcard(id = 0, word = "abc", definition = "xax")
+        val goodDefinitionFlashcard = Flashcard(id = 2, word = "x", definition = "abc")
+        val goodTranslationFlashcard = Flashcard(id = 3, word = "ooo", definition = "xax", translation = "abc")
+        val badFlashcard = Flashcard(id = 4, word = "qqq", definition = "uuu")
+        fakeRepository.insertFlashcard(goodWordFlashcard)
+        fakeRepository.insertFlashcard(goodDefinitionFlashcard)
+        fakeRepository.insertFlashcard(goodTranslationFlashcard)
+        fakeRepository.insertFlashcard(badFlashcard)
+
+        val flashcards = getFlashcards(searchText = "abc").first()
+
+        assertEquals(3, flashcards.size)
+        assertTrue(flashcards.contains(goodWordFlashcard))
+        assertTrue(flashcards.contains(goodDefinitionFlashcard))
+        assertTrue(flashcards.contains(goodTranslationFlashcard))
+        assertFalse(flashcards.contains(badFlashcard))
+
+    }
+
+
+    private fun fillFlashcards() {
         val flashcardsToInsert = mutableListOf<Flashcard>()
         val chars =  ('a'..'z')
         chars.forEachIndexed { index, c ->
@@ -74,124 +213,6 @@ class GetFlashcardsTest {
         flashcardsToInsert.shuffle()
         flashcardsToInsert.forEach {
             runBlocking { fakeRepository.insertFlashcard(it) }
-        }
-    }
-
-    @Test
-    fun `should correctly sort by word ascending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Word(OrderType.Ascending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].word <= flashcards[i + 1].word)
-        }
-    }
-
-    @Test
-    fun `should correctly sort by word descending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Word(OrderType.Descending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].word >= flashcards[i + 1].word)
-        }
-    }
-
-    @Test
-    fun `should correctly sort by definition ascending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Definition(OrderType.Ascending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(
-                (flashcards[i].definition ?: "") <= (flashcards[i + 1].definition ?: "")
-            )
-        }
-    }
-
-    @Test
-    fun `should correctly sort by definition descending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Definition(OrderType.Descending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(
-                (flashcards[i].definition ?: "") >= (flashcards[i + 1].definition ?: "")
-            )
-        }
-    }
-
-    @Test
-    fun `should correctly sort by translation ascending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Translation(OrderType.Ascending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(
-                (flashcards[i].translation ?: "") <= (flashcards[i + 1].translation ?: "")
-            )
-        }
-    }
-
-    @Test
-    fun `should correctly sort by translation descending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Translation(OrderType.Descending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(
-                (flashcards[i].translation ?: "") >= (flashcards[i + 1].translation ?: "")
-            )
-        }
-    }
-
-    @Test
-    fun `should correctly sort by score ascending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Score(OrderType.Ascending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].score <= flashcards[i + 1].score)
-        }
-    }
-
-    @Test
-    fun `should correctly sort by score descending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Score(OrderType.Descending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].score >= flashcards[i + 1].score)
-        }
-    }
-
-    @Test
-    fun `should correctly sort by date ascending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Date(OrderType.Ascending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].timestamp <= flashcards[i + 1].timestamp)
-        }
-    }
-
-    @Test
-    fun `should correctly sort by date descending`() = runBlocking {
-        fillFlashcardsForSortTest()
-
-        val flashcards = getFlashcards(FlashcardOrder.Date(OrderType.Descending)).first()
-
-        for(i in 0..flashcards.size - 2) {
-            Assert.assertTrue(flashcards[i].timestamp >= flashcards[i + 1].timestamp)
         }
     }
 }
