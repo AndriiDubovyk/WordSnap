@@ -33,4 +33,8 @@ class FakeFlashcardRepository : FlashcardRepository {
     override suspend fun getLowestScoreFlashcards(): List<Flashcard> {
         return flashcards.sortedBy { it.score }.take(5)
     }
+
+    override suspend fun getTotalScore(): Int {
+        return flashcards.sumOf { it.score }
+    }
 }

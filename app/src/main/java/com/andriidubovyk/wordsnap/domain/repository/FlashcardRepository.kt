@@ -16,4 +16,6 @@ interface FlashcardRepository {
     suspend fun deleteAllFlashcards()
 
     suspend fun getLowestScoreFlashcards(): List<Flashcard>
+
+    suspend fun getTotalScore(): Int
 }

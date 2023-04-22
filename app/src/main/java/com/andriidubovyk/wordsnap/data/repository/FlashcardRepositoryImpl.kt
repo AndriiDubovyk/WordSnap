@@ -32,4 +32,8 @@ class FlashcardRepositoryImpl(
     override suspend fun getLowestScoreFlashcards(): List<Flashcard> {
         return dao.getLowestScoreFlashcards()
     }
+
+    override suspend fun getTotalScore(): Int {
+        return dao.getTotalScore()
+    }
 }

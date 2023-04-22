@@ -6,5 +6,6 @@ data class FlashcardUseCases(
     val addFlashcard: AddFlashcard,
     val deleteFlashcard: DeleteFlashcard,
     val deleteAllFlashcards: DeleteAllFlashcards,
-    val getLowestScoreFlashcards: GetLowestScoreFlashcards
+    val getLowestScoreFlashcards: GetLowestScoreFlashcards,
+    val getTotalScore: GetTotalScore
 )

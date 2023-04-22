@@ -50,7 +50,8 @@ object AppModule {
             deleteAllFlashcards = DeleteAllFlashcards(repository),
             addFlashcard = AddFlashcard(repository),
             getFlashcard = GetFlashcard(repository),
-            getLowestScoreFlashcards = GetLowestScoreFlashcards(repository)
+            getLowestScoreFlashcards = GetLowestScoreFlashcards(repository),
+            getTotalScore = GetTotalScore(repository)
         )
     }
 

@@ -24,4 +24,7 @@ interface FlashcardDao {
 
     @Query("SELECT * FROM flashcard ORDER BY score ASC LIMIT 5")
     suspend fun getLowestScoreFlashcards(): List<Flashcard>
+
+    @Query("SELECT SUM(score) FROM flashcard")
+    suspend fun getTotalScore(): Int
 }
