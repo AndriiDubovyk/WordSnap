@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andriidubovyk.wordsnap.common.LoaderHelper
 import com.andriidubovyk.wordsnap.domain.model.Flashcard
 import com.andriidubovyk.wordsnap.domain.use_case.flashcard.FlashcardUseCases
 import com.andriidubovyk.wordsnap.domain.utils.FlashcardOrder
@@ -57,6 +58,7 @@ class FlashcardsViewModel @Inject constructor(
                     flashcards = flashcards,
                     flashcardOrder = order
                 )
+                LoaderHelper.isLoading = false
             }
             .launchIn(viewModelScope)
     }

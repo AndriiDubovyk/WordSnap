@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.andriidubovyk.wordsnap.R
-import com.andriidubovyk.wordsnap.presentation.components.BannerAdView
 
 @Composable
 fun TopBar(

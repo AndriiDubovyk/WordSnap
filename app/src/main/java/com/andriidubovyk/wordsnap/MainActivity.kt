@@ -13,7 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.andriidubovyk.wordsnap.common.LoaderHelper
 import com.andriidubovyk.wordsnap.presentation.components.bottom_nav_bar.BottomNavigationPanel
 import com.andriidubovyk.wordsnap.presentation.components.top_bar.TopBar
 import com.andriidubovyk.wordsnap.presentation.navigation.NavigationHost
@@ -26,6 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { LoaderHelper.isLoading }
+        }
         MobileAds.initialize(this)
         createNotificationChannel()
         setContent {

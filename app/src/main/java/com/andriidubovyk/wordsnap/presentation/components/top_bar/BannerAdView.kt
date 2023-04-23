@@ -1,4 +1,4 @@
-package com.andriidubovyk.wordsnap.presentation.components
+package com.andriidubovyk.wordsnap.presentation.components.top_bar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
