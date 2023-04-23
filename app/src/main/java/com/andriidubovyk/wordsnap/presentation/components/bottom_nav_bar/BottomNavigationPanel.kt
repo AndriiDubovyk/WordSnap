@@ -18,7 +18,7 @@ fun BottomNavigationPanel(navController: NavController) {
         BottomNavigationItem.Settings
     )
     val backStackEntry = navController.currentBackStackEntryAsState()
-    BottomAppBar(containerColor = MaterialTheme.colorScheme.primary) {
+    BottomAppBar {
         items.forEach {
             NavigationBarItem(
                 selected = it.screen_route == backStackEntry.value?.destination?.route,
