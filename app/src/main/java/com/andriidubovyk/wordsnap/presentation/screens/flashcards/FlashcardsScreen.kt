@@ -16,11 +16,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.andriidubovyk.wordsnap.R
+import com.andriidubovyk.wordsnap.common.TestTags
 import com.andriidubovyk.wordsnap.presentation.navigation.Screen
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardItem
 import com.andriidubovyk.wordsnap.presentation.screens.flashcards.components.FlashcardSearchBar
@@ -84,7 +86,10 @@ fun FlashcardScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
                 OrderSection(
-                    modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primary)
+                        .testTag(TestTags.ORDER_SECTION),
                     flashcardOrder = state.flashcardOrder,
                     onOrderChange = { order -> viewModel.onEvent(FlashcardsEvent.Order(order)) }
                 )
