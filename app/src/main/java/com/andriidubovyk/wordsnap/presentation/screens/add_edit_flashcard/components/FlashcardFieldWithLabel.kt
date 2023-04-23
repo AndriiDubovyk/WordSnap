@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.andriidubovyk.wordsnap.presentation.components.AdvancedTextField
 
@@ -14,6 +15,7 @@ fun FlashcardFieldWithLabel(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
+    testTag: String = "",
     lines: Int = 1
 ) {
     Column(
@@ -31,7 +33,7 @@ fun FlashcardFieldWithLabel(
             )
         }
         AdvancedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag(testTag),
             value = value,
             onValueChange = { onValueChange(it) },
             lines = lines,
